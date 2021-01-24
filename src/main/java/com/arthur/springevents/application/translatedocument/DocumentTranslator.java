@@ -26,25 +26,29 @@ public class DocumentTranslator implements TranslateDocument {
     public void onEvent(DocumentTranslationRequested event) throws InterruptedException {
         log.info("Received DocumentTranslationRequested event: {}", event);
 
-        var translatedDocument = translate(event.getDocument(), event.getTargetLanguage());
-
-        eventPublisher.publishEvent(
-                new DocumentTranslated(
-                        this,
-                        event.getCorrelationId(),
-                        translatedDocument,
-                        event.getTargetLanguage()));
+        event.getTargetLanguages().stream()
+                .map(targetLanguage -> translate(event.getDocument(), targetLanguage))
+                .map(
+                        translatedDocument ->
+                                new DocumentTranslated(
+                                        this, event.getCorrelationId(), translatedDocument))
+                .forEach(eventPublisher::publishEvent);
     }
 
     @Override
-    public Document translate(Document document, String targetLanguage)
-            throws InterruptedException {
+    public Document translate(Document document, String targetLanguage) {
         log.info("Translating Document: {}", document);
 
         // here we could retrieve all available translations and apply the best one
         documentService.create(document.getText() + " translated!", targetLanguage);
 
-        Thread.sleep(5000);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            log.error(
+                    "Java streams API is buggy and does not accept functions that throw checked exceptions. Suppressing them here...");
+        }
+
         return document;
     }
 }

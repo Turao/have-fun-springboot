@@ -10,13 +10,10 @@ public class DocumentTranslated extends EnhancedEvent {
     private static final long serialVersionUID = 1L;
 
     private Document document;
-    private String translatedLanguage;
 
-    public DocumentTranslated(
-            Object source, UUID correlationId, Document document, String translatedLanguage) {
+    public DocumentTranslated(Object source, UUID correlationId, Document document) {
         super(source, correlationId);
         this.document = document;
-        this.translatedLanguage = translatedLanguage;
     }
 
     public Document getDocument() {
@@ -24,6 +21,6 @@ public class DocumentTranslated extends EnhancedEvent {
     }
 
     public String getTranslatedLanguage() {
-        return this.translatedLanguage;
+        return this.document.getLanguage();
     }
 }

@@ -1,47 +1,44 @@
 package com.arthur.springevents.domain.document;
 
 import java.util.UUID;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
 import lombok.ToString;
 
 @Entity
 @ToString
 public class Document {
-  @Id
-  private UUID id;
+    @Id private UUID id;
 
-  private String text;
-  
-  private String language;
+    private String text;
 
-  public Document() {}
+    private String language;
 
-  public Document(UUID id, String text, String language) {
-    this.id = id;
-    this.text = text;
-    this.language = language;
-  }
+    public Document() {}
 
-  public UUID getId() {
-    return this.id;
-  }
+    public Document(UUID id, String text, String language) {
+        this.id = id;
+        this.text = text;
+        this.language = language;
+    }
 
-  public void setText(String text) {
-    this.text = text;
-  }
+    public UUID getId() {
+        return this.id;
+    }
 
-  public String getText() {
-    return this.text;
-  }
+    public void setText(String text) {
+        this.text = text;
+    }
 
-  public String getLanguage() {
-    return this.language;
-  }
+    public String getText() {
+        return this.text;
+    }
 
-  public void setLanguage(String language) {
-    this.language = language;
-  }
+    public String getLanguage() {
+        return this.language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 }

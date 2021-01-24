@@ -4,16 +4,16 @@ import java.util.UUID;
 
 public class DomainModelUpdated<T> extends EnhancedEvent {
 
-  private static final long serialVersionUID = 1L;
-  
-  private T model;
+    private static final long serialVersionUID = 1L;
 
-  public DomainModelUpdated(Object source, T model, UUID correlationId) {
-    super(source, correlationId);
-    this.model = model;
-  }
-  
-  public T getModel() {
-    return this.model;
-  }
+    private T model;
+
+    public DomainModelUpdated(Object source, T model, UUID correlationId) {
+        super(source, correlationId);
+        this.model = model;
+    }
+
+    public T getModel() {
+        return this.model;
+    }
 }

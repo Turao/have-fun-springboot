@@ -10,10 +10,13 @@ import lombok.ToString;
 public class Card {
     @Id private UUID id;
 
+    private Integer points;
+
     public Card() {}
 
-    public Card(UUID id) {
+    public Card(UUID id, Integer points) {
         this.id = id;
+        this.points = points;
     }
 
     public UUID getId() {
@@ -22,5 +25,17 @@ public class Card {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public Integer getPoints() {
+        return this.points;
+    }
+
+    public void setPoints(Integer points) {
+        this.points = points;
+    }
+
+    public Double getPrice() {
+        return this.points * 1.5;
     }
 }

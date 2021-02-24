@@ -41,4 +41,9 @@ public class MatchService {
         eventPublisher.publishEvent(new MatchDeleted(this, match, UUID.randomUUID()));
         return match;
     }
+
+    public Match findById(UUID matchId) {
+        return repository.findById(matchId)
+            .orElseThrow(EntityNotFoundException::new);
+    }
 }

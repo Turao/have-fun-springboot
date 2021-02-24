@@ -1,5 +1,6 @@
 package com.arthur.springevents.card;
 
+import java.util.Random;
 import java.util.UUID;
 
 import javax.persistence.EntityNotFoundException;
@@ -26,7 +27,7 @@ public class CardService {
     public Card create() {
         log.info("Creating Card...");
 
-        var card = new Card(UUID.randomUUID());
+        var card = new Card(UUID.randomUUID(), new Random().nextInt(100)) ;
         card = repository.save(card);
         log.info("Card created!");
 
@@ -53,5 +54,10 @@ public class CardService {
         
         eventPublisher.publishEvent(new CardDeleted(this, card, UUID.randomUUID()));
         return card;
+    }
+
+    public Card findById(UUID cardId) {
+        return repository.findById(cardId)
+            .orElseThrow(EntityNotFoundException::new);
     }
 }

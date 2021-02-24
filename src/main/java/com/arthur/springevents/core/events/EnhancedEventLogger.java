@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class EnhancedEventsLogger {
+public class EnhancedEventLogger {
     @EventListener
     public void onEvent(EnhancedEvent event) {
         log.info("An event has been published: {}", event);

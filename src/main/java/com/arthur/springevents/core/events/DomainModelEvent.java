@@ -2,7 +2,7 @@ package com.arthur.springevents.core.events;
 
 import java.util.UUID;
 
-public class DomainModelEvent<T> extends EnhancedEvent {
+public abstract class DomainModelEvent<T> extends EnhancedEvent {
 
     private static final long serialVersionUID = 1L;
 
@@ -15,5 +15,12 @@ public class DomainModelEvent<T> extends EnhancedEvent {
 
     public T getModel() {
         return this.model;
+    }
+
+    public String toString() {
+        return this.getClass().getSimpleName() +
+            "(super=" + super.toString() +
+            ", model=" + this.model +
+            ")";
     }
 }

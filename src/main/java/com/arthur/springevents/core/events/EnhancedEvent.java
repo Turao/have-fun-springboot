@@ -1,5 +1,6 @@
 package com.arthur.springevents.core.events;
 
+import java.time.OffsetDateTime;
 import java.util.UUID;
 import lombok.ToString;
 import org.springframework.context.ApplicationEvent;
@@ -10,6 +11,8 @@ public abstract class EnhancedEvent extends ApplicationEvent {
     private static final long serialVersionUID = 1L;
 
     private UUID correlationId;
+
+    private OffsetDateTime timestamp;
 
     public EnhancedEvent(Object source) {
         super(source);

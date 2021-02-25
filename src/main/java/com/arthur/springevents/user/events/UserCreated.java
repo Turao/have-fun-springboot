@@ -3,7 +3,7 @@ package com.arthur.springevents.user.events;
 import java.util.UUID;
 
 import com.arthur.springevents.core.events.DomainModelEvent;
-import com.arthur.springevents.user.User;
+import com.arthur.springevents.user.domain.User;
 
 public class UserCreated extends DomainModelEvent<User> {
 

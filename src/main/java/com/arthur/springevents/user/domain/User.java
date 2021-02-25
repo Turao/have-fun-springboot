@@ -1,4 +1,4 @@
-package com.arthur.springevents.user;
+package com.arthur.springevents.user.domain;
 
 import java.util.UUID;
 import javax.persistence.Entity;

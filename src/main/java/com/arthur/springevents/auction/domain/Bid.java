@@ -1,6 +1,5 @@
 package com.arthur.springevents.auction.domain;
 
-import java.math.BigInteger;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -9,14 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Bid {
+public class Bid implements Comparable<Bid> {
   @Id public UUID id;
 
   @ManyToOne
   private Auction auction;
 
   // the user that bids on some item
-  private UUID userId;
+  private UUID bidderId;
   
   // the item that was bidded on
   private UUID itemId;
@@ -27,10 +26,11 @@ public class Bid {
 
   protected Bid() {}
 
-  public Bid(UUID userId, UUID itemId, int price) {
+  public Bid(Auction auction, UUID bidderId, UUID itemId, int price) {
     this.id = UUID.randomUUID();
-
-    this.userId = userId;
+    
+    this.auction = auction;
+    this.bidderId = bidderId;
     this.itemId = itemId;
 
     // todo: replace for Money API
@@ -44,8 +44,8 @@ public class Bid {
     return this.id;
   }
 
-  public UUID getUserId() {
-    return this.userId;
+  public UUID getBidderId() {
+    return this.bidderId;
   }
 
   public UUID getItemId() {
@@ -58,6 +58,11 @@ public class Bid {
 
   public OffsetDateTime getPlacedAt() {
     return this.placedAt;
+  }
+
+  @Override
+  public int compareTo(Bid other) {
+    return Integer.compare(this.price, other.getPrice());
   }
 
 }

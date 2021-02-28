@@ -3,6 +3,7 @@ package com.arthur.springevents.card.integration.web;
 import java.util.UUID;
 
 import com.arthur.springevents.card.domain.Card;
+import com.arthur.springevents.card.usecases.AssignOwner;
 import com.arthur.springevents.card.usecases.CreateCard;
 import com.arthur.springevents.card.usecases.ExpireCard;
 import com.arthur.springevents.card.usecases.GetCard;
@@ -24,6 +25,7 @@ public class CardController {
     private final CreateCard createCard;
     private final GetCard getCard;
     private final ExpireCard expireCard;
+    private final AssignOwner assignOwner;
 
     @GetMapping
     public Card mockCreated() {
@@ -46,6 +48,15 @@ public class CardController {
     @DeleteMapping("/{id}")
     public Card expire(@PathVariable("id") UUID cardId) {
         var card = expireCard.execute(cardId);
+        return card;
+    }
+
+    @PostMapping("{cardId}/assign-owner/{ownerId}")
+    public Card assignOwner(
+        @PathVariable("cardId") UUID cardId,
+        @PathVariable("ownerId") UUID ownerId
+    ) {
+        var card = assignOwner.execute(cardId, ownerId);
         return card;
     }
 }

@@ -14,6 +14,8 @@ public class Card {
 
     private CardStatus status;
 
+    private UUID ownerId;
+
     public Card(Integer points) {
         this.id = UUID.randomUUID();
         this.points = points;
@@ -42,5 +44,14 @@ public class Card {
 
     public void expire() {
         this.status = CardStatus.EXPIRED;
+    }
+
+    public UUID getOwnerId() {
+        return this.ownerId;
+    }
+
+    public void assignOwner(UUID ownerId) {
+        if (this.ownerId != null) throw new IllegalStateException("Card already has an Owner");
+        this.ownerId = ownerId;
     }
 }

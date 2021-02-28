@@ -2,12 +2,11 @@ package com.arthur.springevents.match.integration.web;
 
 import java.util.UUID;
 
-import javax.websocket.server.PathParam;
+import com.arthur.springevents.match.usecases.CreateMatch;
+import com.arthur.springevents.match.usecases.EndMatch;
+import com.arthur.springevents.match.usecases.StartMatch;
 
-import com.arthur.springevents.match.MatchService;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,29 +18,25 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MatchController {
 
-    private final MatchService matchService;
-
-    @GetMapping
-    public String mockCreated() {
-        var match = matchService.create();
-        return "Match created: " + match;
-    }
-
-    @GetMapping("/{id}")
-    public String find(@PathParam("id") UUID matchId) {
-        var match = matchService.findById(matchId);
-        return "Match: " + match;
-    }
+    private final CreateMatch createMatch;
+    private final StartMatch startMatch;
+    private final EndMatch endMatch;
 
     @PostMapping
-    public String create() {
-        matchService.create();
-        return "Match created";
+    public String createMatch() {
+        var match = createMatch.execute();
+        return "Match Created: " + match;
     }
 
-    @DeleteMapping("/{id}")
-    public String delete(@PathParam("id") UUID matchId) {
-        matchService.delete(matchId);
-        return "Match deleted";
+    @PostMapping("{id}/start")
+    public String startMatch(@PathVariable("id") UUID id) {
+        var match = startMatch.execute(id);
+        return "Match Started: " + match;
+    }
+
+    @PostMapping("{id}/end")
+    public String endMatch(@PathVariable("id") UUID id) {
+        var match = endMatch.execute(id);
+        return "Match Ended: " + match;
     }
 }

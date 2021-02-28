@@ -3,6 +3,7 @@ package com.arthur.springevents.auction.domain;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -10,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Auction {
@@ -55,12 +58,17 @@ public class Auction {
     if (startDate == null) throw new IllegalStateException("Cannot place bid. Auction has not started yet");
     if (endDate != null) throw new IllegalStateException("Cannot place bid. Auction has already ended");
 
-    var bid = new Bid(userId, itemId, price);
+    var bid = new Bid(this, userId, itemId, price);
     this.bids.add(bid);
     return bid;
   }
 
   public Collection<Bid> getBids() {
     return this.bids;
+  }
+
+  @JsonIgnore // todo: remove later
+  public Bid getHighestBid() {
+    return Collections.max(this.bids);
   }
 }

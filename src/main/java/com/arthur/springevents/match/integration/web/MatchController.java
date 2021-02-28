@@ -2,6 +2,7 @@ package com.arthur.springevents.match.integration.web;
 
 import java.util.UUID;
 
+import com.arthur.springevents.match.domain.Match;
 import com.arthur.springevents.match.usecases.CreateMatch;
 import com.arthur.springevents.match.usecases.EndMatch;
 import com.arthur.springevents.match.usecases.StartMatch;
@@ -23,20 +24,20 @@ public class MatchController {
     private final EndMatch endMatch;
 
     @PostMapping
-    public String createMatch() {
+    public Match createMatch() {
         var match = createMatch.execute();
-        return "Match Created: " + match;
+        return match;
     }
 
     @PostMapping("{id}/start")
-    public String startMatch(@PathVariable("id") UUID id) {
+    public Match startMatch(@PathVariable("id") UUID id) {
         var match = startMatch.execute(id);
-        return "Match Started: " + match;
+        return match;
     }
 
     @PostMapping("{id}/end")
-    public String endMatch(@PathVariable("id") UUID id) {
+    public Match endMatch(@PathVariable("id") UUID id) {
         var match = endMatch.execute(id);
-        return "Match Ended: " + match;
+        return match;
     }
 }

@@ -2,6 +2,7 @@ package com.arthur.springevents.user.integration.web;
 
 import java.util.UUID;
 
+import com.arthur.springevents.user.domain.User;
 import com.arthur.springevents.user.usecases.CreateUser;
 import com.arthur.springevents.user.usecases.DeleteUser;
 import com.arthur.springevents.user.usecases.GetUser;
@@ -27,26 +28,26 @@ public class UserController {
     private final GetUser getUser;
 
     @GetMapping
-    public String mockCreated() {
+    public User mockCreated() {
         var user = createUser.execute();
-        return "User created: " + user;
+        return user;
     }
 
     @GetMapping("/{id}")
-    public String find(@PathVariable("id") UUID userId) {
+    public User find(@PathVariable("id") UUID userId) {
         var user = getUser.execute(userId);
-        return "User: " + user;
+        return user;
     }
 
     @PostMapping
-    public String create() {
-        createUser.execute();
-        return "User created";
+    public User create() {
+        var user = createUser.execute();
+        return user;
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") UUID userId) {
-        deleteUser.execute(userId);
-        return "User deleted";
+    public User delete(@PathVariable("id") UUID userId) {
+        var user = deleteUser.execute(userId);
+        return user;
     }
 }

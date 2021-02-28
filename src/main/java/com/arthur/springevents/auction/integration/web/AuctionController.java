@@ -2,6 +2,7 @@ package com.arthur.springevents.auction.integration.web;
 
 import java.util.UUID;
 
+import com.arthur.springevents.auction.domain.Auction;
 import com.arthur.springevents.auction.usecases.CreateAuction;
 import com.arthur.springevents.auction.usecases.EndAuction;
 import com.arthur.springevents.auction.usecases.StartAuction;
@@ -23,20 +24,20 @@ public class AuctionController {
     private final EndAuction endAuction;
 
     @PostMapping
-    public String createAuction() {
+    public Auction createAuction() {
         var auction = createAuction.execute();
-        return "Auction Created: " + auction;
+        return auction;
     }
 
     @PostMapping("{id}/start")
-    public String startAuction(@PathVariable("id") UUID id) {
+    public Auction startAuction(@PathVariable("id") UUID id) {
         var auction = startAuction.execute(id);
-        return "Auction Started: " + auction;
+        return auction;
     }
 
     @PostMapping("{id}/end")
-    public String endAuction(@PathVariable("id") UUID id) {
+    public Auction endAuction(@PathVariable("id") UUID id) {
         var auction = endAuction.execute(id);
-        return "Auction Ended: " + auction;
+        return auction;
     }
 }

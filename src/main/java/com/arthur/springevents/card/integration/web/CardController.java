@@ -2,6 +2,7 @@ package com.arthur.springevents.card.integration.web;
 
 import java.util.UUID;
 
+import com.arthur.springevents.card.domain.Card;
 import com.arthur.springevents.card.usecases.CreateCard;
 import com.arthur.springevents.card.usecases.ExpireCard;
 import com.arthur.springevents.card.usecases.GetCard;
@@ -25,26 +26,26 @@ public class CardController {
     private final ExpireCard expireCard;
 
     @GetMapping
-    public String mockCreated() {
+    public Card mockCreated() {
         var card = createCard.execute();
-        return "Card created: " + card;
+        return card;
     }
 
     @GetMapping("/{id}")
-    public String find(@PathVariable("id") UUID cardId) {
+    public Card find(@PathVariable("id") UUID cardId) {
         var card = getCard.execute(cardId);
-        return "Card: " + card;
+        return card;
     }
 
     @PostMapping
-    public String create() {
-        createCard.execute();
-        return "Card created";
+    public Card create() {
+        var card = createCard.execute();
+        return card;
     }
 
     @DeleteMapping("/{id}")
-    public String expire(@PathVariable("id") UUID cardId) {
-        expireCard.execute(cardId);
-        return "Card expired";
+    public Card expire(@PathVariable("id") UUID cardId) {
+        var card = expireCard.execute(cardId);
+        return card;
     }
 }

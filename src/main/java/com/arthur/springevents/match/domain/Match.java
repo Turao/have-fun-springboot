@@ -17,10 +17,8 @@ public class Match {
 
     private OffsetDateTime endDate;
 
-    public Match() {}
-
-    public Match(UUID id) {
-        this.id = id;
+    public Match() {
+        this.id = UUID.randomUUID();
     }
 
     public UUID getId() {

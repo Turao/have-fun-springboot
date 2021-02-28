@@ -11,10 +11,8 @@ import lombok.ToString;
 public class User {
     @Id private UUID id;
 
-    public User() {}
-
-    public User(UUID id) {
-        this.id = id;
+    public User() {
+        this.id = UUID.randomUUID();
     }
 
     public UUID getId() {

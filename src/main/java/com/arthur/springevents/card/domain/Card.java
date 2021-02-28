@@ -14,10 +14,8 @@ public class Card {
 
     private CardStatus status;
 
-    public Card() {}
-
     public Card(UUID id, Integer points) {
-        this.id = id;
+        this.id = UUID.randomUUID();
         this.points = points;
         this.status = CardStatus.ACTIVE;
     }

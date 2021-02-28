@@ -7,17 +7,18 @@ import javax.persistence.EntityNotFoundException;
 import com.arthur.springevents.match.events.MatchCreated;
 import com.arthur.springevents.match.events.MatchDeleted;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class MatchService {
-    @Autowired private MatchRepository repository;
 
-    @Autowired private ApplicationEventPublisher eventPublisher;
+    private final MatchRepository repository;
+    private final ApplicationEventPublisher eventPublisher;
 
     public Match create() {
         log.info("Creating Match...");

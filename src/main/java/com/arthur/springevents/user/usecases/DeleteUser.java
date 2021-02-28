@@ -1,5 +1,6 @@
 package com.arthur.springevents.user.usecases;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
@@ -16,9 +17,11 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class DeleteUser {
-  @Autowired private UserRepository repository;
-  @Autowired private ApplicationEventPublisher eventPublisher;
+
+  private final UserRepository repository;
+  private final ApplicationEventPublisher eventPublisher;
 
   public User execute(UUID userId) {
     var user = repository.findById(userId)

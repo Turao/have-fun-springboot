@@ -6,7 +6,6 @@ import com.arthur.springevents.card.usecases.CreateCard;
 import com.arthur.springevents.card.usecases.ExpireCard;
 import com.arthur.springevents.card.usecases.GetCard;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,13 +13,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/card")
+@RequiredArgsConstructor
 public class CardController {
 
-    @Autowired private CreateCard createCard;
-    @Autowired private GetCard getCard;
-    @Autowired private ExpireCard expireCard;
+    private final CreateCard createCard;
+    private final GetCard getCard;
+    private final ExpireCard expireCard;
 
     @GetMapping
     public String mockCreated() {

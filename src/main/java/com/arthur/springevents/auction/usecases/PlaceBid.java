@@ -3,6 +3,7 @@ package com.arthur.springevents.auction.usecases;
 import java.util.UUID;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 
 import com.arthur.springevents.auction.domain.Auction;
 import com.arthur.springevents.auction.events.BidPlaced;
@@ -22,6 +23,7 @@ public class PlaceBid {
   private final AuctionRepository repository;
   private final ApplicationEventPublisher eventPublisher;
 
+  @Transactional
   public Auction execute(UUID auctionId, UUID userId, UUID itemId, int price) {
     log.info("Placing bid from User: {} for Item: {} with Price: {} at Auction: {}",
       userId, itemId, price, auctionId);

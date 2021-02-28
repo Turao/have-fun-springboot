@@ -24,7 +24,7 @@ public class CreateCard {
   public Card execute() {
     log.info("Creating Card...");
 
-    var card = new Card(UUID.randomUUID(), new Random().nextInt(100));
+    var card = new Card(new Random().nextInt(100));
     card = repository.save(card);
     log.info("Card created: {}", card);
     

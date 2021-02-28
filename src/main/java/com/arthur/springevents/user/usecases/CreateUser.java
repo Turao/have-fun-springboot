@@ -23,7 +23,7 @@ public class CreateUser {
   public User execute() {
     log.info("Creating Document...");
 
-    var user = new User(UUID.randomUUID());
+    var user = new User();
     user = repository.save(user);
     log.info("User created: {}", user);
     

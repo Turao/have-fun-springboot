@@ -33,6 +33,15 @@ public class Auction {
     this.bids = new ArrayList<>();
   }
 
+  public String toString() {
+    return "Auction=(" +
+        "id=" + this.id +
+        ", startDate=" + this.startDate +
+        ", endDate=" + this.endDate +
+        ", bids=" + this.bids +
+        ")";
+}
+
   public UUID getId() {
     return this.id;
   }
@@ -52,6 +61,13 @@ public class Auction {
     if (endDate != null) throw new IllegalStateException("Auction has already ended");
     
     this.endDate = OffsetDateTime.now();
+
+    var highestBid = getHighestBid();
+    this.bids
+      .stream()
+      .filter(bid -> !bid.equals(highestBid))
+      .forEach(Bid::closeAsLoser);
+    highestBid.closeAsWinner();
   }
 
   public Bid placeBid(UUID userId, UUID itemId, int price) {

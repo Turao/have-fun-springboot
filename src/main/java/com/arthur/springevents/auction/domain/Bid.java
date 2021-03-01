@@ -4,6 +4,8 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -24,6 +26,9 @@ public class Bid implements Comparable<Bid> {
 
   private OffsetDateTime placedAt;
 
+  @Enumerated(EnumType.STRING)
+  private BidStatus status;
+
   protected Bid() {}
 
   public Bid(Auction auction, UUID bidderId, UUID itemId, int price) {
@@ -33,12 +38,25 @@ public class Bid implements Comparable<Bid> {
     this.bidderId = bidderId;
     this.itemId = itemId;
 
+    this.status = BidStatus.OPEN;
+
     // todo: replace for Money API
     if (price < 0) throw new IllegalArgumentException("Price should not be negative");
     this.price = price;
 
     this.placedAt = OffsetDateTime.now();
   }
+
+  public String toString() {
+    return "Bid=(" +
+        "id=" + this.id +
+        ", auction=" + this.auction.getId() + // todo: validate to avoid null pointers
+        ", bidderId=" + this.bidderId +
+        ", itemId=" + this.itemId +
+        ", price=" + this.price +
+        ", status=" + this.status +
+        ")";
+}
 
   public UUID getId() {
     return this.id;
@@ -65,4 +83,15 @@ public class Bid implements Comparable<Bid> {
     return Integer.compare(this.price, other.getPrice());
   }
 
+  
+  public void closeAsWinner() {
+    if (!BidStatus.OPEN.equals(this.status)) throw new IllegalStateException("This bid has already been closed");
+   this.status = BidStatus.WINNER;
+  }
+
+  public void closeAsLoser() {
+    if (!BidStatus.OPEN.equals(this.status)) throw new IllegalStateException("This bid has already been closed");
+   this.status = BidStatus.LOSER;
+  }
+  
 }

@@ -80,6 +80,8 @@ public class Bid implements Comparable<Bid> {
 
   @Override
   public int compareTo(Bid other) {
+    // todo: enhance this comparator to allow for same-price bids
+    // todo: highest price first, then earlier bids first
     return Integer.compare(this.price, other.getPrice());
   }
 

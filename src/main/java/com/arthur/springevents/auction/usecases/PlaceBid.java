@@ -24,14 +24,14 @@ public class PlaceBid {
   private final ApplicationEventPublisher eventPublisher;
 
   @Transactional
-  public Auction execute(UUID auctionId, UUID userId, UUID itemId, int price) {
-    log.info("Placing bid from User: {} for Item: {} with Price: {} at Auction: {}",
-      userId, itemId, price, auctionId);
+  public Auction execute(UUID auctionId, UUID userId, int price) {
+    log.info("Placing bid from User: {} with Price: {} at Auction: {}",
+      userId, price, auctionId);
 
     var auction = repository.findById(auctionId)
       .orElseThrow(EntityNotFoundException::new);
     
-    var bid = auction.placeBid(userId, itemId, price);
+    var bid = auction.placeBid(userId, price);
     log.info("Bid placed");
 
     eventPublisher.publishEvent(new BidPlaced(this, bid, UUID.randomUUID()));

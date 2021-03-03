@@ -20,9 +20,6 @@ public class Bid implements Comparable<Bid> {
   // the user that bids on some item
   private UUID bidderId;
   
-  // the item that was bidded on
-  private UUID itemId;
-  
   private int price;
 
   private OffsetDateTime placedAt;
@@ -32,12 +29,11 @@ public class Bid implements Comparable<Bid> {
 
   protected Bid() {}
 
-  public Bid(Auction auction, UUID bidderId, UUID itemId, int price) {
+  public Bid(Auction auction, UUID bidderId, int price) {
     this.id = UUID.randomUUID();
     
     this.auction = auction;
     this.bidderId = bidderId;
-    this.itemId = itemId;
 
     this.status = BidStatus.OPEN;
 
@@ -53,7 +49,6 @@ public class Bid implements Comparable<Bid> {
         "id=" + this.id +
         ", auction=" + this.auction.getId() + // todo: validate to avoid null pointers
         ", bidderId=" + this.bidderId +
-        ", itemId=" + this.itemId +
         ", price=" + this.price +
         ", status=" + this.status +
         ")";
@@ -65,10 +60,6 @@ public class Bid implements Comparable<Bid> {
 
   public UUID getBidderId() {
     return this.bidderId;
-  }
-
-  public UUID getItemId() {
-    return this.itemId;
   }
 
   public int getPrice() {

@@ -20,10 +20,10 @@ public class CreateAuction {
   private final AuctionRepository repository;
   private final ApplicationEventPublisher eventPublisher;
 
-  public Auction execute() {
+  public Auction execute(UUID itemId) {
     log.info("Creating Auction");
 
-    var auction = new Auction();
+    var auction = new Auction(itemId);
     repository.save(auction);
     
     log.info("Auction created: {}", auction);

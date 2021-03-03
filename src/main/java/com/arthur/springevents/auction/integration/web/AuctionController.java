@@ -27,9 +27,9 @@ public class AuctionController {
     private final EndAuction endAuction;
     private final PlaceBid placeBid;
 
-    @PostMapping
-    public Auction createAuction() {
-        var auction = createAuction.execute();
+    @PostMapping("{itemId}")
+    public Auction createAuction(@PathVariable("itemId") UUID itemId) {
+        var auction = createAuction.execute(itemId);
         return auction;
     }
 
@@ -45,8 +45,6 @@ public class AuctionController {
         return auction;
     }
 
-    
-
     @PostMapping("{auctionId}/bid")
     public Auction placeBid(
         @PathVariable("auctionId") UUID auctionId,
@@ -55,7 +53,6 @@ public class AuctionController {
         var auction = placeBid.execute(
             auctionId,
             bidRequest.getUserId(),
-            bidRequest.getItemId(),
             bidRequest.getPrice());
 
         return auction;

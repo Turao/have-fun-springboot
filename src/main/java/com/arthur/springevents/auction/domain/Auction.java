@@ -18,6 +18,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Auction {
   @Id private UUID id;
 
+  private UUID itemId;
+
   private OffsetDateTime startDate;
 
   private OffsetDateTime endDate;
@@ -28,14 +30,18 @@ public class Auction {
     fetch = FetchType.EAGER)
   private Collection<Bid> bids;
 
-  public Auction() {
+  protected Auction() {}
+
+  public Auction(UUID itemId) {
     this.id = UUID.randomUUID();
+    this.itemId = itemId;
     this.bids = new ArrayList<>();
   }
 
   public String toString() {
     return "Auction=(" +
         "id=" + this.id +
+        ", itemId=" + this.itemId +
         ", startDate=" + this.startDate +
         ", endDate=" + this.endDate +
         ", bids=" + this.bids +
@@ -46,8 +52,16 @@ public class Auction {
     return this.id;
   }
 
-  public UUID setId(UUID id) {
+  protected UUID setId(UUID id) {
     return this.id;
+  }
+
+  public UUID getItemId() {
+    return this.itemId;
+  }
+
+  protected void setItemId(UUID itemId) {
+    this.itemId = itemId;
   }
 
   public void start() {
@@ -70,11 +84,11 @@ public class Auction {
     highestBid.closeAsWinner();
   }
 
-  public Bid placeBid(UUID userId, UUID itemId, int price) {
+  public Bid placeBid(UUID userId, int price) {
     if (startDate == null) throw new IllegalStateException("Cannot place bid. Auction has not started yet");
     if (endDate != null) throw new IllegalStateException("Cannot place bid. Auction has already ended");
 
-    var bid = new Bid(this, userId, itemId, price);
+    var bid = new Bid(this, userId, price);
     this.bids.add(bid);
     return bid;
   }

@@ -1,6 +1,7 @@
 package com.arthur.springevents.auction.domain;
 
 import java.time.OffsetDateTime;
+import java.util.Comparator;
 import java.util.UUID;
 
 import javax.persistence.Entity;
@@ -80,9 +81,12 @@ public class Bid implements Comparable<Bid> {
 
   @Override
   public int compareTo(Bid other) {
-    // todo: enhance this comparator to allow for same-price bids
-    // todo: highest price first, then earlier bids first
-    return Integer.compare(this.price, other.getPrice());
+    var highestPriceFirst = Comparator.comparing(Bid::getPrice);
+    var earliestBidFirst = Comparator.comparing(Bid::getPlacedAt).reversed();
+
+    return highestPriceFirst
+      .thenComparing(earliestBidFirst)
+      .compare(this, other);
   }
 
   

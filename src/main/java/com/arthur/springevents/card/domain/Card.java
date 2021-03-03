@@ -56,4 +56,9 @@ public class Card {
         if (this.ownerId != null) throw new IllegalStateException("Card already has an Owner");
         this.ownerId = ownerId;
     }
+
+    public void unassignOwner() {
+        if (this.ownerId == null) throw new IllegalStateException("Card has no Owner");
+        this.ownerId = null;
+    }
 }

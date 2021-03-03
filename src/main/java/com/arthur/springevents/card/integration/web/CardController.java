@@ -7,6 +7,7 @@ import com.arthur.springevents.card.usecases.AssignOwner;
 import com.arthur.springevents.card.usecases.CreateCard;
 import com.arthur.springevents.card.usecases.ExpireCard;
 import com.arthur.springevents.card.usecases.GetCard;
+import com.arthur.springevents.card.usecases.UnassignOwner;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ public class CardController {
     private final GetCard getCard;
     private final ExpireCard expireCard;
     private final AssignOwner assignOwner;
+    private final UnassignOwner unassignOwner;
 
     @GetMapping("/{id}")
     public Card find(@PathVariable("id") UUID cardId) {
@@ -51,6 +53,14 @@ public class CardController {
         @PathVariable("ownerId") UUID ownerId
     ) {
         var card = assignOwner.execute(cardId, ownerId);
+        return card;
+    }
+
+    @PostMapping("{cardId}/unassign-owner")
+    public Card assignOwner(
+        @PathVariable("cardId") UUID cardId
+    ) {
+        var card = unassignOwner.execute(cardId);
         return card;
     }
 }

@@ -27,12 +27,6 @@ public class CardController {
     private final ExpireCard expireCard;
     private final AssignOwner assignOwner;
 
-    @GetMapping
-    public Card mockCreated() {
-        var card = createCard.execute();
-        return card;
-    }
-
     @GetMapping("/{id}")
     public Card find(@PathVariable("id") UUID cardId) {
         var card = getCard.execute(cardId);

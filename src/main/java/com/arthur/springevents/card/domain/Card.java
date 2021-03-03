@@ -16,6 +16,8 @@ public class Card {
 
     private UUID ownerId;
 
+    protected Card() {}
+
     public Card(Integer points) {
         this.id = UUID.randomUUID();
         this.points = points;

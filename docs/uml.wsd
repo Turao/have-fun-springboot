@@ -1,0 +1,77 @@
+@startuml Bounded Contexts
+
+package Cards {
+  class Card {
+    User owner
+    Status status
+  }
+
+  note bottom of Card
+  Cards expire after N matches or past X date
+  end note
+}
+
+package Matches {
+  class Match {
+    Collection<Participant> participants
+    Rules rules
+  }
+
+  class Rules {
+    Integer maxParticipants
+    Integer maxDeckSize
+  }
+
+  class Participant {
+    User user
+    Collection<Card> deck
+  }
+
+  note bottom of Match
+  Whoever has the best card collection is the Winner
+  end note
+
+  note bottom of Rules
+  Decks should have a fixed size
+  (otherwise quantity could win over quality)
+  end note
+}
+
+package Auctions {
+  class Auction {
+    Item item
+    Bid bids
+  }
+  
+  class Bid {
+    User bidder
+    Money price
+    Status status
+  }
+}
+
+
+package Users {
+  class User {
+    Collection<Card> cards
+  }
+}
+
+' Users
+User --> Card : owns
+User --> Match : participates in
+User --> Auction : participates in
+
+' Auctions
+Auction *-- Bid
+Auction --> Card : auctions
+Bid --> User : placed by
+
+' Matches
+Match *-- Rules
+Match *-- Participant
+Participant --> User
+Participant --> Card
+
+
+@enduml

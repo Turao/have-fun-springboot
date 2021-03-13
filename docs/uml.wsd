@@ -3,6 +3,7 @@
 package Cards {
   class Card {
     User owner
+    Integer points
     Status status
   }
 

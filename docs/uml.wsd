@@ -26,6 +26,7 @@ package Matches {
   class Participant {
     User user
     Collection<Card> deck
+    Collection<Match> matches
   }
 
   note bottom of Match
@@ -70,7 +71,7 @@ Bid --> User : placed by
 
 ' Matches
 Match *-- Rules
-Match *-- Participant
+Match "*" -- "*" Participant : TODO: how to map that many-to-many?
 Participant --> User
 Participant --> Card
 

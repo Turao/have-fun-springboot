@@ -11,7 +11,6 @@ import com.arthur.springevents.user.domain.User;
 import com.arthur.springevents.user.events.UserDeleted;
 import com.arthur.springevents.user.repository.UserRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
